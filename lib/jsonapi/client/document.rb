@@ -1,5 +1,10 @@
+require 'jsonapi/client/resource'
+require 'jsonapi/client/relationship'
+require 'jsonapi/client/link'
+require 'jsonapi/client/error'
+
 module JSONAPI
-  module Client
+  class Client
     class Document
       attr_reader :data, :included, :errors, :links, :meta
 

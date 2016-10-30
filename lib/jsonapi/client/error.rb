@@ -1,5 +1,5 @@
 module JSONAPI
-  module Client
+  class Client
     class Error
       attr_reader :id, :links, :status, :code, :title, :detail, :source, :meta
 

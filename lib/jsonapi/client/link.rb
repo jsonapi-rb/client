@@ -1,5 +1,5 @@
 module JSONAPI
-  module Client
+  class Client
     class Link
       attr_reader :href, :meta
 
