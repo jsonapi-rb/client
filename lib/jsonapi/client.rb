@@ -9,8 +9,8 @@ module JSONAPI
     def initialize(base_url: nil, headers: {})
       @base_url = base_url
       @headers = {
-        'Content-Type' => 'application/vnd.api+json',
-        'Accept' => 'application/vnd.api+json'
+        :'Content-Type' => 'application/vnd.api+json',
+        :Accept => 'application/vnd.api+json'
       }.merge!(headers)
     end
 
@@ -18,8 +18,11 @@ module JSONAPI
       request(@base_url, endpoint)
     end
 
-    def request(base_url, endpoint, headers = {})
-      Request.new(base_url, endpoint, @headers.merge(headers))
+    def request(base_url, endpoint)
+      req = Request.new(base_url, endpoint)
+      req.headers(@headers) if @headers.any?
+
+      req
     end
   end
 end
