@@ -14,10 +14,11 @@ module JSONAPI
       end
 
       def call
-        response = Net::HTTP.start(uri.host, uri.port,
-                                   use_ssl: uri.scheme == 'https') do |http|
-          http.request request
-        end
+        uri = URI(@base_url)
+        response =
+          Net::HTTP.start(uri.host, use_ssl: uri.scheme == 'https') do |http|
+            http.request request
+          end
 
         Response.new(response)
       end
