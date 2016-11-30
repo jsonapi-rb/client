@@ -13,16 +13,31 @@ module JSONAPI
         @headers = {}
       end
 
+      def call
+        Net::HTTP.start(uri.host, uri.port,
+                        use_ssl: uri.scheme == 'https') do |http|
+          http.request request
+        end
+      end
+
       def list
         @method = :get
         @uri = uri
         self
       end
 
+      def list!
+        list.call
+      end
+
       def find(id)
         @method = :get
         @uri = uri(id)
         self
+      end
+
+      def find!(id)
+        find(id).call
       end
 
       def create(hash)
@@ -33,6 +48,10 @@ module JSONAPI
         self
       end
 
+      def create!(hash)
+        create(hash).call
+      end
+
       def update(id, hash)
         hash[:type] ||= @endpoint
         @method = :patch
@@ -41,10 +60,18 @@ module JSONAPI
         self
       end
 
+      def update!(id, hash)
+        update(id, hash).call
+      end
+
       def delete(id)
         @method = :delete
         @uri = uri(id)
         self
+      end
+
+      def delete!(id)
+        delete(id).call
       end
 
       def include(hash)
@@ -71,7 +98,7 @@ module JSONAPI
         self
       end
 
-      def to_h
+      def to_hash
         {
           method: @method,
           uri: full_uri,
@@ -81,8 +108,29 @@ module JSONAPI
           headers: @headers
         }
       end
+      alias to_h to_hash
 
       private
+
+      def request
+        uri = URI(full_uri)
+        case @method
+        when :get
+          Net::HTTP::Get.new(uri)
+        when :post
+          Net::HTTP::Post.new(uri).tap do |req|
+            req.body = @data
+          end
+        when :patch
+          Net::HTTP::Patch.new(uri).tap do |req|
+            req.body = @data
+          end
+        when :delete
+          Net::HTTP::Delete.new(uri)
+        else
+          raise "Unknown request method: #{@method}"
+        end
+      end
 
       def query
         @params.map { |k, v| "#{k}=#{v}" }.join('&')
