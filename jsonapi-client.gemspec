@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email         = 'lucas.hosseini@gmail.com'
   spec.summary       = 'Consume JSON API documents.'
   spec.description   = 'Client library for the JSON API spec.'
-  spec.homepage      = 'https://github.com/jsonapi-rb/client'
+  spec.homepage      = 'https://github.com/jsonapi-rb/jsonapi-client'
   spec.license       = 'MIT'
 
   spec.files         = Dir['README.md', 'lib/**/*']
