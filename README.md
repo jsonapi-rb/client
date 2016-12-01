@@ -4,7 +4,7 @@ Ruby gem for consuming [JSON API](http://jsonapi.org) documents.
 ## Status
 
 [![Gem Version](https://badge.fury.io/rb/jsonapi-client.svg)](https://badge.fury.io/rb/jsonapi-client)
-[![Build Status](https://secure.travis-ci.org/jsonapi-rb/client.svg?branch=master)](http://travis-ci.org/jsonapi-rb/client?branch=master)
+[![Build Status](https://secure.travis-ci.org/jsonapi-rb/jsonapi-client.svg?branch=master)](http://travis-ci.org/jsonapi-rb/client?branch=master)
 
 ## Installation
 ```ruby
