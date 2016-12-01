@@ -117,21 +117,25 @@ module JSONAPI
 
       def request
         uri = URI(full_uri)
-        case @method
-        when :get
-          Net::HTTP::Get.new(uri)
-        when :post
-          Net::HTTP::Post.new(uri).tap do |req|
-            req.body = @data
+        request =
+          case @method
+          when :get
+            Net::HTTP::Get.new(uri)
+          when :post
+            Net::HTTP::Post.new(uri).tap do |req|
+              req.body = @data
+            end
+          when :patch
+            Net::HTTP::Patch.new(uri).tap do |req|
+              req.body = @data
+            end
+          when :delete
+            Net::HTTP::Delete.new(uri)
+          else
+            raise "Unknown request method: #{@method}"
           end
-        when :patch
-          Net::HTTP::Patch.new(uri).tap do |req|
-            req.body = @data
-          end
-        when :delete
-          Net::HTTP::Delete.new(uri)
-        else
-          raise "Unknown request method: #{@method}"
+        @headers.each_with_object(request) do |(k, v), r|
+          r[k] = v
         end
       end
 
