@@ -16,7 +16,7 @@ module JSONAPI
       end
 
       def body
-        return nil if body.nil?
+        return nil if @http_res.body.nil?
         json = JSON.parse(@http_res.body)
         Document.new(json)
       end
