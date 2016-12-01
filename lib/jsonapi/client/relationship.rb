@@ -1,5 +1,5 @@
 module JSONAPI
-  module Client
+  class Client
     class Relationship
       attr_reader :data, :links, :meta
 
