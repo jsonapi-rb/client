@@ -17,7 +17,7 @@ module JSONAPI
       def parse_data!(data, included)
         return unless data
         @data =
-          if data.respond_to?(:each)
+          if data.respond_to?(:each) && !data.is_a?(Hash)
             data.map { |h| Resource.new(h) }
           else
             Resource.new(data)
